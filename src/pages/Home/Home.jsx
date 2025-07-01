@@ -107,6 +107,10 @@ const Home = () => {
           className="tmp__inner"
           style={{ flexDirection: "column", alignItems: "center" }}
         >
+          <div
+            className="tmp__logo"
+            style={{ display: "block", marginBottom: "10px" }}
+          ></div>
           <div className="tmp__main" style={{ marginRight: "0px" }}>
             <div className="main">
               <div className="payout _show">
