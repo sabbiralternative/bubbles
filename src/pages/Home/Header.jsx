@@ -3,7 +3,7 @@ import { useSound } from "../../context/ApiProvider";
 import { useAuth } from "../../hooks/auth";
 import { useEffect } from "react";
 
-const Header = () => {
+const Header = ({ isDesktop }) => {
   const { sound, setSound } = useSound();
   const { token, balance } = useSelector((state) => state.auth);
   const { mutate: handleAuth } = useAuth();
@@ -24,7 +24,12 @@ const Header = () => {
     }
   };
   return (
-    <>
+    <div
+      style={{
+        width: isDesktop ? "420px" : "100%",
+        margin: "0 auto",
+      }}
+    >
       <div
         id="ModuleLayoutDiv"
         style={{
@@ -32,7 +37,9 @@ const Header = () => {
           zIndex: 1000,
           left: "0px",
           top: "0px",
-          width: "100%",
+          right: "0px",
+          margin: "0 auto",
+          width: isDesktop ? "420px" : "100%",
           height: "40px",
           background:
             "linear-gradient(rgba(34, 34, 34, 0.5) 0%, rgba(34, 34, 34, 0) 100%)",
@@ -45,24 +52,24 @@ const Header = () => {
       <div
         data-track="balance"
         className="balance--Kjiqa"
-        style={{ position: "fixed", zIndex: 1000, left: "8px", top: "8px" }}
+        style={{ position: "absolute", zIndex: 1000, left: "8px", top: "8px" }}
       >
         <div className="balanceTitle--JnSFJ">Balance:</div>
         <i className="fm-iconFont fm-iconFont-ios-creditcard" />
         <span className="balanceSum--_ab3Z">{balance}</span>
       </div>
-      <div
+      {/* <div
         className="name--TP6Ls"
         style={{ position: "fixed", zIndex: 1000, left: "8px", bottom: "0px" }}
       >
         Turbo Games • Bubbles
-      </div>
-      <div
+      </div> */}
+      {/* <div
         style={{ position: "fixed", zIndex: 1000, right: "8px", bottom: "0px" }}
       >
         <div className="time--tHxDp">30 Jun, 2025 | 18:13:11</div>
-      </div>
-      <div
+      </div> */}
+      {/* <div
         id
         style={{
           position: "fixed",
@@ -74,17 +81,19 @@ const Header = () => {
           width: "100%",
           pointerEvents: "none",
         }}
-      />
+      /> */}
       <div
-        id
         style={{
           position: "fixed",
           zIndex: 1000,
-          right: "8px",
+          // right: isDesktop ? "40px" : "8px",
           top: "8px",
           display: "flex",
           flexDirection: "row-reverse",
           alignItems: "center",
+          width: isDesktop ? "420px" : "100%",
+          margin: "0 auto",
+          marginRight: "10px",
         }}
       >
         <div data-track="settings" className="icon--k9yLr">
@@ -110,7 +119,7 @@ const Header = () => {
           <div className="iconTurboUniverse--Of1Ih" />
         </div> */}
       </div>
-    </>
+    </div>
   );
 };
 

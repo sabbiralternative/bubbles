@@ -24,6 +24,7 @@ const Home = () => {
   const [rows, setRows] = useState(5);
   const [column, setColumn] = useState(5);
   const [betAmount, setBetAmount] = useState(100);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const initialBoxes = Array.from({ length: rows * column }).map((_, i) => {
     const randomIndex = Math.floor(Math.random() * allowedDefaults.length);
@@ -56,16 +57,44 @@ const Home = () => {
     }
   }, [rows, column]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1000) {
+        setIsDesktop(true);
+      } else {
+        setIsDesktop(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const isAtLeastOneBoxActive = boxes.some((box) => box.active);
 
   return (
-    <div id="app">
+    <div
+      style={{
+        width: isDesktop ? "420px" : "100%",
+        margin: "0 auto",
+        overflow: "hidden",
+      }}
+      id="app"
+    >
       {showWinModal && <WinModal betAmount={betAmount} />}
-      <Header />
+      <Header isDesktop={isDesktop} />
 
       <div className="tmp">
-        <div className="tmp__inner">
-          <div className="tmp__main">
+        <div
+          className="tmp__inner"
+          style={{ flexDirection: "column", alignItems: "center" }}
+        >
+          <div className="tmp__main" style={{ marginRight: "0px" }}>
             <div className="main">
               <div className="payout _show">
                 <div className="payout__description">
@@ -92,7 +121,7 @@ const Home = () => {
                 <div
                   className="game__center"
                   style={{
-                    "--item-size": `${boxSize}px`,
+                    "--item-size": `${isDesktop ? boxSize + 16 : boxSize}px`,
                     "--columns": column,
                     "--rows": rows,
                   }}
