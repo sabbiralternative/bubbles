@@ -5,17 +5,30 @@ import GameFooter from "./GameFooter";
 import GameRight from "./GameRight";
 import Header from "./Header";
 import WinModal from "./WinModal";
+// const itemSizeOBJ = {
+//   1: 31.2,
+//   2: 31.2,
+//   3: 31.2,
+//   4: 31.2,
+//   5: 31.2,
+//   6: 26,
+//   7: 22.285714285714285,
+//   8: 19.6,
+//   9: 17.333333333333332,
+//   10: 15.6,
+// };
+
 const itemSizeOBJ = {
-  1: 31.2,
-  2: 31.2,
-  3: 31.2,
-  4: 31.2,
-  5: 31.2,
-  6: 26,
-  7: 22.285714285714285,
-  8: 19.6,
-  9: 17.333333333333332,
-  10: 15.6,
+  1: 3,
+  2: 3,
+  3: 3,
+  4: 2.8,
+  5: 2.5,
+  6: 2.3,
+  7: 1.8,
+  8: 1.6,
+  9: 1.5,
+  10: 1.5,
 };
 const allowedDefaults = ["_default0", "_default2", "_default3", "_default4"];
 const Home = () => {
@@ -121,7 +134,7 @@ const Home = () => {
                 <div
                   className="game__center"
                   style={{
-                    "--item-size": `${isDesktop ? boxSize + 16 : boxSize}px`,
+                    "--item-size": `${boxSize}rem`,
                     "--columns": column,
                     "--rows": rows,
                   }}

@@ -27,7 +27,7 @@ const GameBox = ({ boxes, setBoxes }) => {
 
               ${box?.star && box?.roundEnd ? "_lose _sprite2" : ""}`}
             >
-              {box?.showBubble && (
+              {box?.showBubble && !box?.noStar && (
                 <div
                   className="game-box__item-active"
                   style={{ animationDelay: "-0.419106s" }}
