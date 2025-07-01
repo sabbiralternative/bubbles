@@ -8588,19 +8588,19 @@ body {
   will-change: transform, opacity;
 }
 .game-box__item._default0 {
-  background-image: url(/default_0.webp);
+  background-image: url(/bubbles/default_0.webp);
 }
 .game-box__item._default1 {
-  background-image: url(https://bubbles.turbogames.io/9772e576d2b33993e334.png);
+  background-image: url(/bubbles/default_1.webp);
 }
 .game-box__item._default2 {
-  background-image: url(https://bubbles.turbogames.io/2288f632b951fd1bc475.png);
+  background-image: url(/bubbles/default_2.webp);
 }
 .game-box__item._default3 {
-  background-image: url(/default_3.webp);
+  background-image: url(/bubbles/default_3.webp);
 }
 .game-box__item._default4 {
-  background-image: url(https://bubbles.turbogames.io/c85addfd6b29f3e88cce.png);
+  background-image: url(/bubbles/default_4.webp);
 }
 .game-box__item._null {
   background-image: url(https://bubbles.turbogames.io/3798cc0ac2570c50caa7.png);

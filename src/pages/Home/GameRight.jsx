@@ -1,8 +1,52 @@
-const GameRight = () => {
+import { useState } from "react";
+const STEP_VALUE = 11.1111;
+
+const GameRight = ({ rows, setRows }) => {
+  const [rangeTop, setRangeTop] = useState(55.5556);
+  const [rangeBottom, setRangeBottom] = useState(44.4444);
+
+  const handleGameRangeChange = (e) => {
+    const inputRange = Number(e.target.value);
+    const diff = Math.abs(inputRange - rows);
+
+    if (inputRange > rows) {
+      setRangeBottom((prev) => prev + STEP_VALUE * diff);
+      setRangeTop((prev) => prev - STEP_VALUE * diff);
+    } else if (inputRange < rows) {
+      setRangeBottom((prev) => prev - STEP_VALUE * diff);
+      setRangeTop((prev) => prev + STEP_VALUE * diff);
+    }
+
+    setRows(inputRange);
+  };
+
+  const handleChange = (type) => {
+    if (type === "plus") {
+      if (rows === 10) {
+        return;
+      } else {
+        setRows((prev) => prev + 1);
+        setRangeBottom((prev) => prev + 11.1111);
+        setRangeTop((prev) => prev - 11.1111);
+      }
+    }
+    if (type === "minus") {
+      if (rows === 1) {
+        return;
+      } else {
+        setRows((prev) => prev - 1);
+        setRangeBottom((prev) => prev - 11.1111);
+        setRangeTop((prev) => prev + 11.1111);
+      }
+    }
+  };
   return (
     <div className="game__right">
       <div className="game-range-v">
-        <div className="game-range-v__plus">
+        <div
+          className="game-range-v__plus"
+          onClick={() => handleChange("plus")}
+        >
           <i className="iconFont iconFont-plus" />
         </div>
         <div
@@ -17,9 +61,11 @@ const GameRight = () => {
             }}
           />
           <input
+            onChange={handleGameRangeChange}
             min={1}
             max={10}
             step={1}
+            value={rows}
             type="range"
             id="acea4e4b4-55bd-4f44-b841-8b6bcd857070"
             style={{
@@ -35,7 +81,7 @@ const GameRight = () => {
           />
           <div
             className="game-range-v__top"
-            style={{ pointerEvents: "none", height: "55.5556%" }}
+            style={{ pointerEvents: "none", height: `${rangeTop}%` }}
           />
           <div
             className="game-range-v__center"
@@ -43,10 +89,13 @@ const GameRight = () => {
           />
           <div
             className="game-range-v__bottom"
-            style={{ pointerEvents: "none", height: "44.4444%" }}
+            style={{ pointerEvents: "none", height: `${rangeBottom}%` }}
           />
         </div>
-        <div className="game-range-v__minus">
+        <div
+          onClick={() => handleChange("minus")}
+          className="game-range-v__minus"
+        >
           <i className="iconFont iconFont-minus" />
         </div>
       </div>

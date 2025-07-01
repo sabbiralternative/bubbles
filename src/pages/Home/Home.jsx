@@ -1,12 +1,66 @@
+import { useEffect, useState } from "react";
 import BetSlip from "./BetSlip";
 import GameBox from "./GameBox";
 import GameFooter from "./GameFooter";
 import GameRight from "./GameRight";
 import Header from "./Header";
-
+import WinModal from "./WinModal";
+const itemSizeOBJ = {
+  1: 31.2,
+  2: 31.2,
+  3: 31.2,
+  4: 31.2,
+  5: 31.2,
+  6: 26,
+  7: 22.285714285714285,
+  8: 19.6,
+  9: 17.333333333333332,
+  10: 15.6,
+};
+const allowedDefaults = ["_default0", "_default2", "_default3", "_default4"];
 const Home = () => {
+  const [showWinModal, setShowWinModal] = useState(false);
+  const [boxSize, setBoxSize] = useState("");
+  const [rows, setRows] = useState(5);
+  const [column, setColumn] = useState(5);
+  const [betAmount, setBetAmount] = useState(100);
+
+  const initialBoxes = Array.from({ length: rows * column }).map((_, i) => {
+    const randomIndex = Math.floor(Math.random() * allowedDefaults.length);
+    return {
+      id: i + 1,
+      name: allowedDefaults[randomIndex],
+      active: false,
+      star: i === 0 ? true : false,
+      noStar: false,
+      roundEnd: false,
+      showBubble: true,
+    };
+  });
+
+  const [boxes, setBoxes] = useState(initialBoxes);
+
+  useEffect(() => {
+    setBoxes(initialBoxes);
+  }, [rows, column]);
+
+  useEffect(() => {
+    if (rows > column) {
+      setBoxSize(itemSizeOBJ[rows]);
+    }
+    if (column > rows) {
+      setBoxSize(itemSizeOBJ[column]);
+    }
+    if (column === rows) {
+      setBoxSize(itemSizeOBJ[column]);
+    }
+  }, [rows, column]);
+
+  const isAtLeastOneBoxActive = boxes.some((box) => box.active);
+
   return (
     <div id="app">
+      {showWinModal && <WinModal betAmount={betAmount} />}
       <Header />
 
       <div className="tmp">
@@ -20,7 +74,12 @@ const Home = () => {
               </div>
               <div className="game">
                 <div className="game__left">
-                  <div className="game__clear _disabled">
+                  <div
+                    onClick={() => setBoxes(initialBoxes)}
+                    className={`game__clear ${
+                      isAtLeastOneBoxActive ? "" : "_disabled"
+                    }`}
+                  >
                     <i className="iconFont iconFont-delete" />
                   </div>
                 </div>
@@ -32,12 +91,16 @@ const Home = () => {
                 />
                 <div
                   className="game__center"
-                  style={{ "-itemSize": "31.2px", "-columns": 5, "-rows": 5 }}
+                  style={{
+                    "--item-size": `${boxSize}px`,
+                    "--columns": column,
+                    "--rows": rows,
+                  }}
                 >
-                  <GameBox />
+                  <GameBox setBoxes={setBoxes} boxes={boxes} />
                 </div>
-                <GameRight />
-                <GameFooter />
+                <GameRight rows={rows} setRows={setRows} />
+                <GameFooter column={column} setColumn={setColumn} />
               </div>
             </div>
           </div>
@@ -48,7 +111,15 @@ const Home = () => {
                 <i className="iconFont iconFont-up" />
               </div>
             </div>
-            <BetSlip />
+            <BetSlip
+              betAmount={betAmount}
+              setBetAmount={setBetAmount}
+              setShowWinModal={setShowWinModal}
+              initialBoxes={initialBoxes}
+              setBoxes={setBoxes}
+              boxes={boxes}
+              isAtLeastOneBoxActive={isAtLeastOneBoxActive}
+            />
           </div>
         </div>
       </div>
