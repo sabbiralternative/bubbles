@@ -5,6 +5,7 @@ import GameFooter from "./GameFooter";
 import GameRight from "./GameRight";
 import Header from "./Header";
 import WinModal from "./WinModal";
+import { useSelector } from "react-redux";
 // const itemSizeOBJ = {
 //   1: 31.2,
 //   2: 31.2,
@@ -32,6 +33,8 @@ const itemSizeOBJ = {
 };
 const allowedDefaults = ["_default0", "_default2", "_default3", "_default4"];
 const Home = () => {
+  const errorMessage = sessionStorage.getItem("errorMessage");
+  const { token } = useSelector((state) => state.auth);
   const [showWinModal, setShowWinModal] = useState(false);
   const [boxSize, setBoxSize] = useState("");
   const [rows, setRows] = useState(5);
@@ -90,7 +93,7 @@ const Home = () => {
 
   const isAtLeastOneBoxActive = boxes.some((box) => box.active);
 
-  return (
+  return token ? (
     <div
       style={{
         width: isDesktop ? "420px" : "100%",
@@ -168,6 +171,13 @@ const Home = () => {
             />
           </div>
         </div>
+      </div>
+    </div>
+  ) : (
+    <div className="error-container">
+      <div className="alert alert-danger text-center m-0 " role="alert">
+        {errorMessage ||
+          "URL parameters are missing or invalid. Key: token | Value"}
       </div>
     </div>
   );
