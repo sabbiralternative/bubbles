@@ -7,7 +7,7 @@
     "settings": {
       "siteTitle": "Bubbles",
       "disabledDevtool": false,
-      "baseUrl": "/bubbles",
+      "baseUrl": "",
       "lobby": "https://aura365.io"
     },
 
